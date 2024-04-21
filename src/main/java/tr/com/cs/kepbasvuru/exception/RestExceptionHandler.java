@@ -1,4 +1,4 @@
-package com.kepbasvuru.demo.exception;
+package tr.com.cs.kepbasvuru.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

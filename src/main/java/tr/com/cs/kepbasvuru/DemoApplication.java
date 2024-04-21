@@ -1,4 +1,4 @@
-package com.kepbasvuru.demo;
+package tr.com.cs.kepbasvuru;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

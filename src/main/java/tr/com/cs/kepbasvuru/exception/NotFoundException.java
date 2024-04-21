@@ -1,4 +1,4 @@
-package com.kepbasvuru.demo.exception;
+package tr.com.cs.kepbasvuru.exception;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String message) {

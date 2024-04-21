@@ -1,4 +1,4 @@
-package com.kepbasvuru.demo.constants;
+package tr.com.cs.kepbasvuru.constants;
 
 public class CommonConstants {
     public static final int TYPE_BIREYSEL = 0;

@@ -1,4 +1,4 @@
-package com.kepbasvuru.demo;
+package tr.com.cs.kepbasvuru;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

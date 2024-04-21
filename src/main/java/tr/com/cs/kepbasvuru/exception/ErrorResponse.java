@@ -1,4 +1,4 @@
-package com.kepbasvuru.demo.exception;
+package tr.com.cs.kepbasvuru.exception;
 
 public class ErrorResponse {
     private int status;
