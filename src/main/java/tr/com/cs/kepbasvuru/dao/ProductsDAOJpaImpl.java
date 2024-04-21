@@ -20,6 +20,7 @@ public class ProductsDAOJpaImpl implements ProductsDAO{
     @Override
     public List<Products> getBireyselProducts() {
         TypedQuery<Products> theQuery= entityManager.createQuery("from Products", Products.class);
-        return null;
+        List<Products> products = theQuery.getResultList();
+        return products;
     }
 }
