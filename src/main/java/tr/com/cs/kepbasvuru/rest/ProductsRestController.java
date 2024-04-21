@@ -30,4 +30,10 @@ public class ProductsRestController {
             default -> null;
         };
     }
+
+    @PostMapping("/{basvuruType}")
+    public Products addProducts(@RequestBody Products theProducts) {
+        theProducts.setId(0);
+        return productsService.save(theProducts);
+    }
 }

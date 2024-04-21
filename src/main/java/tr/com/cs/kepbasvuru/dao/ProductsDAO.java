@@ -5,5 +5,11 @@ import tr.com.cs.kepbasvuru.entity.bireysel.Products;
 import java.util.List;
 
 public interface ProductsDAO {
-    public List<Products> getBireyselProducts();
+    List<Products> getBireyselProducts();
+
+    Products findById(int theId);
+
+    Products save(Products theProducts);
+
+    void deleteById(int theId);
 }
