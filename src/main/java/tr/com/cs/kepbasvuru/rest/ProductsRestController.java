@@ -31,9 +31,22 @@ public class ProductsRestController {
         };
     }
 
-    @PostMapping("/{basvuruType}")
+    @PostMapping("/")
     public Products addProducts(@RequestBody Products theProducts) {
         theProducts.setId(0);
         return productsService.save(theProducts);
+    }
+
+    @PutMapping("/")
+    public Products updateProduct(@RequestBody Products theProduct) {
+        return productsService.save(theProduct);
+    }
+
+    @DeleteMapping("/{productId}") //parametre gondermek icin
+    public String deleteProduct(@PathVariable int productId) {
+        Products tempProduct = productsService.findById(productId);
+        if(tempProduct == null) throw new NotFoundException("Product doesn' exist " + productId);
+        productsService.deleteById(productId);
+        return "deleted product id is: " + productId;
     }
 }
