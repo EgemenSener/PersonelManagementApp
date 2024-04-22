@@ -3,37 +3,45 @@ package tr.com.cs.kepbasvuru.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tr.com.cs.kepbasvuru.dao.ProductsDAO;
+import tr.com.cs.kepbasvuru.dao.ProductsRepository;
 import tr.com.cs.kepbasvuru.entity.bireysel.Products;
+import tr.com.cs.kepbasvuru.exception.NotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductsServiceImpl implements  ProductsService{
 
-    private ProductsDAO productsDAO;
+    private ProductsRepository productsRepository;
 
     @Autowired
-    public ProductsServiceImpl(ProductsDAO theProductsDAO) {
-        productsDAO = theProductsDAO;
+    public ProductsServiceImpl(ProductsRepository theProductsRepository) {
+        productsRepository = theProductsRepository;
     }
     @Override
-    public List<Products> getBireyselProducts() {
-        return productsDAO.getBireyselProducts();
-    }
+    public List<Products> findAll() {return productsRepository.findAll();}
 
     @Override
     public Products findById(int theId) {
-        return productsDAO.findById(theId);
+        Optional<Products> result = productsRepository.findById(theId);
+        Products theProduct = null;
+
+        if(result.isPresent()) {
+            theProduct = result.get();
+        } else {
+            throw new NotFoundException("Did not found product " + theId);
+        }
+        return theProduct;
     }
-    @Transactional
+
     @Override
     public Products save(Products theProducts) {
-        return productsDAO.save(theProducts);
+        return productsRepository.save(theProducts);
     }
-    @Transactional
+
     @Override
     public void deleteById(int theId) {
-        productsDAO.deleteById(theId);
+        productsRepository.deleteById(theId);
     }
 }

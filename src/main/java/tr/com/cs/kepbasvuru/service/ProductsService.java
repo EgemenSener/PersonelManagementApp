@@ -5,7 +5,7 @@ import tr.com.cs.kepbasvuru.entity.bireysel.Products;
 import java.util.List;
 
 public interface ProductsService {
-    List<Products> getBireyselProducts();
+    List<Products> findAll();
 
     Products findById(int theId);
 

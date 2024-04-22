@@ -24,20 +24,19 @@ public class ProductsRestController {
     @GetMapping("/{basvuruType}")
     public List<Products> getProducts(@PathVariable int basvuruType) {
         return switch (basvuruType) {
-            case TYPE_BIREYSEL -> productsService.getBireyselProducts();
+            case TYPE_BIREYSEL -> productsService.findAll();
             case TYPE_KURUMSAL -> throw new NotFoundException(TYPE_KURUMSAL + " products doesn't exist!");
             case TYPE_KAMU -> null;
             default -> null;
         };
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public Products addProducts(@RequestBody Products theProducts) {
-        theProducts.setId(0);
         return productsService.save(theProducts);
     }
 
-    @PutMapping("/")
+    @PutMapping()
     public Products updateProduct(@RequestBody Products theProduct) {
         return productsService.save(theProduct);
     }
