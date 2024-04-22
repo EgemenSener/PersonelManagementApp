@@ -3,6 +3,7 @@ package tr.com.cs.kepbasvuru.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tr.com.cs.kepbasvuru.client.SalesforceClient;
 import tr.com.cs.kepbasvuru.dao.ProductsRepository;
 import tr.com.cs.kepbasvuru.entity.bireysel.Products;
 import tr.com.cs.kepbasvuru.exception.NotFoundException;
@@ -15,10 +16,20 @@ public class ProductsServiceImpl implements  ProductsService{
 
     private ProductsRepository productsRepository;
 
+    private SalesforceClient salesforceClient;
+
     @Autowired
-    public ProductsServiceImpl(ProductsRepository theProductsRepository) {
+    public ProductsServiceImpl(ProductsRepository theProductsRepository, SalesforceClient theSalesforceClient) {
         productsRepository = theProductsRepository;
+        salesforceClient = theSalesforceClient;
     }
+
+    @Override
+    public String getProducts() {
+        String token = salesforceClient.getBearerToken();
+        return salesforceClient.getProducts(token);
+    }
+
     @Override
     public List<Products> findAll() {return productsRepository.findAll();}
 

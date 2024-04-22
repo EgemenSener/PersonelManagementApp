@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 @SpringBootApplication
 public class DemoApplication {
 	public static void main(String[] args) {
+		System.setProperty("jdk.httpclient.HttpClient.log","all");
 		SpringApplication.run(DemoApplication.class, args);
 	}
 

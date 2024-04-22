@@ -21,6 +21,11 @@ public class ProductsRestController {
         productsService = theProductsService;
     }
 
+    @GetMapping("/api")
+    public String getSfProducts() {
+        return productsService.getProducts();
+    }
+
     @GetMapping("/{basvuruType}")
     public List<Products> getProducts(@PathVariable int basvuruType) {
         return switch (basvuruType) {
