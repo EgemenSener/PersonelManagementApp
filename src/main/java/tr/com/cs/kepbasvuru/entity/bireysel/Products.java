@@ -2,8 +2,6 @@ package tr.com.cs.kepbasvuru.entity.bireysel;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name="products")
 public class Products {
@@ -19,22 +17,15 @@ public class Products {
     private String productName;
     @Column(name="product_desc")
     private String productDesc;
-    @Transient
-    ProductCharge productCharge;
-    @Transient
-    List<ChildProducts> childProducts;
-
     public Products() {
 
     }
-    public Products(int id, String productType, String productSku, String productName, String productDesc, ProductCharge productCharge, List<ChildProducts> childProducts) {
+    public Products(int id, String productType, String productSku, String productName, String productDesc) {
         this.id = id;
         this.productType = productType;
         this.productSku = productSku;
         this.productName = productName;
         this.productDesc = productDesc;
-        this.productCharge = productCharge;
-        this.childProducts = childProducts;
     }
 
     public int getId() {
@@ -77,22 +68,6 @@ public class Products {
         this.productDesc = productDesc;
     }
 
-    public ProductCharge getProductCharge() {
-        return productCharge;
-    }
-
-    public void setProductCharge(ProductCharge productCharge) {
-        this.productCharge = productCharge;
-    }
-
-    public List<ChildProducts> getChildProducts() {
-        return childProducts;
-    }
-
-    public void setChildProducts(List<ChildProducts> childProducts) {
-        this.childProducts = childProducts;
-    }
-
     @Override
     public String toString() {
         return "Products{" +
@@ -101,8 +76,6 @@ public class Products {
                 ", productSku='" + productSku + '\'' +
                 ", productName='" + productName + '\'' +
                 ", productDesc='" + productDesc + '\'' +
-                ", productCharge=" + productCharge +
-                ", childProducts=" + childProducts +
                 '}';
     }
 }

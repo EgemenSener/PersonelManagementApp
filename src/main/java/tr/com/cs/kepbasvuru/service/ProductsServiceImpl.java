@@ -2,7 +2,6 @@ package tr.com.cs.kepbasvuru.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import tr.com.cs.kepbasvuru.client.SalesforceClient;
 import tr.com.cs.kepbasvuru.dao.ProductsRepository;
 import tr.com.cs.kepbasvuru.entity.bireysel.Products;
@@ -11,12 +10,14 @@ import tr.com.cs.kepbasvuru.exception.NotFoundException;
 import java.util.List;
 import java.util.Optional;
 
+import static tr.com.cs.kepbasvuru.constants.CommonConstants.*;
+
 @Service
 public class ProductsServiceImpl implements  ProductsService{
 
-    private ProductsRepository productsRepository;
+    private final ProductsRepository productsRepository;
 
-    private SalesforceClient salesforceClient;
+    private final SalesforceClient salesforceClient;
 
     @Autowired
     public ProductsServiceImpl(ProductsRepository theProductsRepository, SalesforceClient theSalesforceClient) {
@@ -25,9 +26,14 @@ public class ProductsServiceImpl implements  ProductsService{
     }
 
     @Override
-    public String getProducts() {
+    public String getProducts(Integer basvuruType) {
         String token = salesforceClient.getBearerToken();
-        return salesforceClient.getProducts(token);
+        return switch (basvuruType) {
+            case TYPE_BIREYSEL -> salesforceClient.getProducts(token, "Bireysel");
+            case TYPE_KURUMSAL -> salesforceClient.getProducts(token, "Kurumsal");
+            case TYPE_KAMU -> salesforceClient.getProducts(token, "Kamu");
+            default -> null;
+        };
     }
 
     @Override
@@ -36,7 +42,7 @@ public class ProductsServiceImpl implements  ProductsService{
     @Override
     public Products findById(int theId) {
         Optional<Products> result = productsRepository.findById(theId);
-        Products theProduct = null;
+        Products theProduct;
 
         if(result.isPresent()) {
             theProduct = result.get();

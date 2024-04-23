@@ -34,7 +34,7 @@ public class SalesforceClient {
         return response.get("access_token");
     }
 
-    public String getProducts(String token) {
+    public String getProducts(String token, String basvuruType) {
         return Collections.singletonList(restClient.get()
                 .uri("apexrest/KepProducts?customerType=Bireysel")
                         .header("Authorization", "Bearer " + token)
