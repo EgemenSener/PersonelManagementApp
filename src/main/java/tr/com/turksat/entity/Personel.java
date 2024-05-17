@@ -1,21 +1,37 @@
 package tr.com.turksat.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
-@Table(name="personel")
-public class Personel extends BasicEntity {
-
+public class Personel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String ad;
-
     private String soyad;
-
     private String tcKimlikNo;
+    private Date dogumTarihi;
 
-    private String dogumTarihi;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false)
+    private Date kayitTarihi;
 
     @ManyToOne
+    @JoinColumn(name = "birim_id")
     private Birim birim;
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getAd() {
         return ad;
@@ -41,12 +57,20 @@ public class Personel extends BasicEntity {
         this.tcKimlikNo = tcKimlikNo;
     }
 
-    public String getDogumTarihi() {
+    public Date getDogumTarihi() {
         return dogumTarihi;
     }
 
-    public void setDogumTarihi(String dogumTarihi) {
+    public void setDogumTarihi(Date dogumTarihi) {
         this.dogumTarihi = dogumTarihi;
+    }
+
+    public Date getKayitTarihi() {
+        return kayitTarihi;
+    }
+
+    public void setKayitTarihi(Date kayitTarihi) {
+        this.kayitTarihi = kayitTarihi;
     }
 
     public Birim getBirim() {
@@ -55,17 +79,5 @@ public class Personel extends BasicEntity {
 
     public void setBirim(Birim birim) {
         this.birim = birim;
-    }
-
-    @Override
-    public String toString() {
-        return "Personel{" +
-                "ad='" + ad + '\'' +
-                ", soyad='" + soyad + '\'' +
-                ", tcKimlikNo='" + tcKimlikNo + '\'' +
-                ", dogumTarihi='" + dogumTarihi + '\'' +
-                ", birim=" + birim +
-                ", id=" + id +
-                '}';
     }
 }

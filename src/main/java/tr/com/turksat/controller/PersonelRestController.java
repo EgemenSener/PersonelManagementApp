@@ -20,8 +20,13 @@ public class PersonelRestController {
     }
 
     @GetMapping()
-    public List<Personel> getPersonels() {
+    public List<Personel> getAllPersonels() {
         return personelService.findAll();
+    }
+
+    @GetMapping("/{personelId}")
+    public Personel getPersonelById(@PathVariable int personelId) {
+        return personelService.findById(personelId);
     }
 
     @PostMapping()
