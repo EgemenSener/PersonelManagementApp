@@ -5,7 +5,6 @@ import tr.com.turksat.entity.Personel;
 import java.util.List;
 
 public interface PersonelService {
-    String getProducts(Integer basvuruType);
     List<Personel> findAll();
 
     Personel findById(int theId);

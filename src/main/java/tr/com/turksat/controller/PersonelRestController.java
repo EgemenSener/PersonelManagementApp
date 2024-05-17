@@ -1,7 +1,6 @@
 package tr.com.turksat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import tr.com.turksat.entity.Personel;
 import tr.com.turksat.exception.NotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -13,39 +12,33 @@ import java.util.List;
 @RequestMapping("/personel")
 public class PersonelRestController {
 
-    private final PersonelService productsService;
+    private final PersonelService personelService;
 
     @Autowired
-    public PersonelRestController(PersonelService theProductsService) {
-        productsService = theProductsService;
-    }
-
-    @GetMapping(value = "/api/{basvuruType}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public String getSfProducts(@PathVariable int basvuruType) {
-        return productsService.getProducts(basvuruType);
+    public PersonelRestController(PersonelService personelService) {
+        this.personelService = personelService;
     }
 
     @GetMapping()
-    public List<Personel> getProducts() {
-        return productsService.findAll();
+    public List<Personel> getPersonels() {
+        return personelService.findAll();
     }
 
     @PostMapping()
-    public Personel addProducts(@RequestBody Personel thePersonel) {
-        return productsService.save(thePersonel);
+    public Personel addPersonel(@RequestBody Personel thePersonel) {
+        return personelService.save(thePersonel);
     }
 
     @PutMapping()
-    public Personel updateProduct(@RequestBody Personel thePersonel) {
-        return productsService.save(thePersonel);
+    public Personel updatePersonel(@RequestBody Personel thePersonel) {
+        return personelService.save(thePersonel);
     }
 
-    @DeleteMapping("/{productId}") //parametre gondermek icin
-    public String deleteProduct(@PathVariable int productId) {
-        Personel tempProduct = productsService.findById(productId);
-        if(tempProduct == null) throw new NotFoundException("Product doesn't exist " + productId);
-        productsService.deleteById(productId);
-        return "deleted product id is: " + productId;
+    @DeleteMapping("/{personelId}") //parametre gondermek icin
+    public String deletePersonel(@PathVariable int personelId) {
+        Personel tempPersonel = personelService.findById(personelId);
+        if(tempPersonel == null) throw new NotFoundException("Personel doesn't exist " + personelId);
+        personelService.deleteById(personelId);
+        return "deleted personel id is: " + personelId;
     }
 }
