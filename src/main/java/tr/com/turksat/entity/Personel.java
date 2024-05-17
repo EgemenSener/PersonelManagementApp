@@ -14,6 +14,9 @@ public class Personel extends BasicEntity {
 
     private String dogumTarihi;
 
+    @ManyToOne
+    private Birim birim;
+
     public String getAd() {
         return ad;
     }
@@ -46,6 +49,14 @@ public class Personel extends BasicEntity {
         this.dogumTarihi = dogumTarihi;
     }
 
+    public Birim getBirim() {
+        return birim;
+    }
+
+    public void setBirim(Birim birim) {
+        this.birim = birim;
+    }
+
     @Override
     public String toString() {
         return "Personel{" +
@@ -53,6 +64,7 @@ public class Personel extends BasicEntity {
                 ", soyad='" + soyad + '\'' +
                 ", tcKimlikNo='" + tcKimlikNo + '\'' +
                 ", dogumTarihi='" + dogumTarihi + '\'' +
+                ", birim=" + birim +
                 ", id=" + id +
                 '}';
     }

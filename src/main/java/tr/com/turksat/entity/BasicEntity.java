@@ -12,7 +12,7 @@ public class BasicEntity implements Serializable {
     private static final long serialVersionUID = 4024790547417705L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false, length = 40)
     protected Long id;
 

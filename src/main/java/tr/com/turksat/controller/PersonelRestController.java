@@ -9,7 +9,7 @@ import tr.com.turksat.service.PersonelService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/personel")
+@RequestMapping("/api/personel")
 public class PersonelRestController {
 
     private final PersonelService personelService;
