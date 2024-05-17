@@ -2,10 +2,11 @@ package tr.com.turksat.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tr.com.turksat.dao.BirimRepository;
 import tr.com.turksat.dao.PersonelRepository;
+import tr.com.turksat.entity.Birim;
 import tr.com.turksat.entity.Personel;
 import tr.com.turksat.exception.NotFoundException;
-import tr.com.turksat.constants.CommonConstants;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class PersonelServiceImpl implements PersonelService {
 
     private final PersonelRepository personelRepository;
+    private final BirimRepository birimRepository;
 
     @Autowired
-    public PersonelServiceImpl(PersonelRepository thePersonelRepository) {
-        personelRepository = thePersonelRepository;
+    public PersonelServiceImpl(PersonelRepository personelRepository, BirimRepository birimRepository) {
+        this.personelRepository = personelRepository;
+        this.birimRepository = birimRepository;
     }
 
     @Override
@@ -36,9 +39,60 @@ public class PersonelServiceImpl implements PersonelService {
         return thePersonel;
     }
 
+    public Personel updatePersonel(Integer personelId, Personel personelDetails) {
+        Optional<Personel> optionalPersonel = personelRepository.findById(personelId);
+        if (optionalPersonel.isPresent()) {
+            Personel personel = optionalPersonel.get();
+
+            if (personelDetails.getAd() != null) {
+                personel.setAd(personelDetails.getAd());
+            }
+
+            if (personelDetails.getSoyad() != null) {
+                personel.setSoyad(personelDetails.getSoyad());
+            }
+
+            if (personelDetails.getTcKimlikNo() != null) {
+                personel.setTcKimlikNo(personelDetails.getTcKimlikNo());
+            }
+
+            if (personelDetails.getDogumTarihi() != null) {
+                personel.setDogumTarihi(personelDetails.getDogumTarihi());
+            }
+
+            if (personelDetails.getKayitTarihi() != null) {
+                personel.setKayitTarihi(personelDetails.getKayitTarihi());
+            }
+
+            Birim birimDetails = personelDetails.getBirim();
+            if (birimDetails != null) {
+                if (birimDetails.getId() != null) {
+                    Optional<Birim> optionalBirim = birimRepository.findById(birimDetails.getId());
+                    if (optionalBirim.isPresent()) {
+                        personel.setBirim(optionalBirim.get());
+                    } else {
+                        throw new NotFoundException("Did not find birim " + birimDetails.getId());
+                    }
+                } else {
+                    Birim savedBirim = birimRepository.save(birimDetails);
+                    personel.setBirim(savedBirim);
+                }
+            }
+
+            return personelRepository.save(personel);
+        } else {
+            throw new NotFoundException("Did not find personel " + personelId);
+        }
+    }
+
     @Override
-    public Personel save(Personel thePersonel) {
-        return personelRepository.save(thePersonel);
+    public Personel save(Personel personel) {
+        Birim birim = personel.getBirim();
+        if (birim != null && birim.getId() == null) {
+            birim = birimRepository.save(birim);
+            personel.setBirim(birim);
+        }
+        return personelRepository.save(personel);
     }
 
     @Override

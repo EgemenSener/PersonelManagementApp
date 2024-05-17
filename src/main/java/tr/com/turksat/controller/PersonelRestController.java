@@ -34,9 +34,9 @@ public class PersonelRestController {
         return personelService.save(thePersonel);
     }
 
-    @PutMapping()
-    public Personel updatePersonel(@RequestBody Personel thePersonel) {
-        return personelService.save(thePersonel);
+    @PutMapping("/{personelId}")
+    public Personel updatePersonel(@PathVariable Integer personelId, @RequestBody Personel thePersonel) {
+        return personelService.updatePersonel(personelId, thePersonel);
     }
 
     @DeleteMapping("/{personelId}") //parametre gondermek icin

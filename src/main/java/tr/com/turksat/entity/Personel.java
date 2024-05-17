@@ -1,5 +1,6 @@
 package tr.com.turksat.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -13,15 +14,15 @@ public class Personel {
     private String ad;
     private String soyad;
     private String tcKimlikNo;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private Date dogumTarihi;
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Date kayitTarihi;
 
     @ManyToOne
-    @JoinColumn(name = "birim_id")
+    @JoinColumn(name = "birim_id", nullable = false)
     private Birim birim;
 
     // Getters and Setters
