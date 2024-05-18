@@ -39,32 +39,24 @@ public class PersonelServiceImpl implements PersonelService {
         return thePersonel;
     }
 
-    public Personel updatePersonel(Integer personelId, Personel personelDetails) {
-        Optional<Personel> optionalPersonel = personelRepository.findById(personelId);
+    public Personel updatePersonel(Integer theId, Personel personelDetails) {
+        Optional<Personel> optionalPersonel = personelRepository.findById(theId);
         if (optionalPersonel.isPresent()) {
             Personel personel = optionalPersonel.get();
 
-            if (personelDetails.getAd() != null) {
+            if (personelDetails.getAd() != null)
                 personel.setAd(personelDetails.getAd());
-            }
-
-            if (personelDetails.getSoyad() != null) {
+            if (personelDetails.getSoyad() != null)
                 personel.setSoyad(personelDetails.getSoyad());
-            }
-
-            if (personelDetails.getTcKimlikNo() != null) {
+            if (personelDetails.getTcKimlikNo() != null)
                 personel.setTcKimlikNo(personelDetails.getTcKimlikNo());
-            }
-
-            if (personelDetails.getDogumTarihi() != null) {
+            if (personelDetails.getDogumTarihi() != null)
                 personel.setDogumTarihi(personelDetails.getDogumTarihi());
-            }
-
-            if (personelDetails.getKayitTarihi() != null) {
+            if (personelDetails.getKayitTarihi() != null)
                 personel.setKayitTarihi(personelDetails.getKayitTarihi());
-            }
 
             Birim birimDetails = personelDetails.getBirim();
+
             if (birimDetails != null) {
                 if (birimDetails.getId() != null) {
                     Optional<Birim> optionalBirim = birimRepository.findById(birimDetails.getId());
@@ -81,7 +73,7 @@ public class PersonelServiceImpl implements PersonelService {
 
             return personelRepository.save(personel);
         } else {
-            throw new NotFoundException("Did not find personel " + personelId);
+            throw new NotFoundException("Did not find personel " + theId);
         }
     }
 
