@@ -88,7 +88,10 @@ public class PersonelServiceImpl implements PersonelService {
     }
 
     @Override
-    public void deleteById(int theId) {
+    public String deleteById(int theId) {
+        Personel tempPersonel = findById(theId);
+        if(tempPersonel == null) throw new NotFoundException("Personel doesn't exist " + theId);
         personelRepository.deleteById(theId);
+        return "deleted personel id is: " + theId;
     }
 }

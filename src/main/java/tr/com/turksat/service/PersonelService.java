@@ -9,5 +9,5 @@ public interface PersonelService {
     Personel findById(int theId);
     Personel updatePersonel(Integer theId, Personel personelDetails);
     Personel save(Personel thePersonel);
-    void deleteById(int theId);
+    String deleteById(int theId);
 }

@@ -2,7 +2,6 @@ package tr.com.turksat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import tr.com.turksat.entity.Personel;
-import tr.com.turksat.exception.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 import tr.com.turksat.service.PersonelService;
 
@@ -41,9 +40,6 @@ public class PersonelRestController {
 
     @DeleteMapping("/{personelId}")
     public String deletePersonel(@PathVariable int personelId) {
-        Personel tempPersonel = personelService.findById(personelId);
-        if(tempPersonel == null) throw new NotFoundException("Personel doesn't exist " + personelId);
-        personelService.deleteById(personelId);
-        return "deleted personel id is: " + personelId;
+        return personelService.deleteById(personelId);
     }
 }
