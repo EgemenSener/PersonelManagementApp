@@ -10,7 +10,7 @@ import java.util.Date;
 public class Personel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String ad;
     private String soyad;
     private String tcKimlikNo;
@@ -26,11 +26,11 @@ public class Personel {
     private Birim birim;
 
     // Getters and Setters
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
