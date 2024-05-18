@@ -40,9 +40,9 @@ public class PersonelServiceImpl implements PersonelService {
     }
 
     public Personel updatePersonel(Integer theId, Personel personelDetails) {
-        Optional<Personel> optionalPersonel = personelRepository.findById(theId);
-        if (optionalPersonel.isPresent()) {
-            Personel personel = optionalPersonel.get();
+        Optional<Personel> result = personelRepository.findById(theId);
+        if (result.isPresent()) {
+            Personel personel = result.get();
 
             if (personelDetails.getAd() != null)
                 personel.setAd(personelDetails.getAd());
@@ -58,14 +58,12 @@ public class PersonelServiceImpl implements PersonelService {
             Birim birimDetails = personelDetails.getBirim();
 
             if (birimDetails != null) {
-                if (birimDetails.getAd() != null) {
+                if (birimDetails.getAd() != null)
                     throw new IllegalArgumentException("Birim adi guncellenemez!");
-                }
 
                 if (birimDetails.getId() != null) {
-                    Optional<Birim> optionalBirim = birimRepository.findById(birimDetails.getId());
-                    if (optionalBirim.isPresent()) {
-                        personel.setBirim(optionalBirim.get());
+                    if (birimRepository.existsById(birimDetails.getId())) {
+                        personel.setBirim(birimDetails);
                     } else {
                         throw new NotFoundException("Birim bulunamadi: " + birimDetails.getId());
                     }
