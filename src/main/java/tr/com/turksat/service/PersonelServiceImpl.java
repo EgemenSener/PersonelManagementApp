@@ -58,31 +58,38 @@ public class PersonelServiceImpl implements PersonelService {
             Birim birimDetails = personelDetails.getBirim();
 
             if (birimDetails != null) {
+                if (birimDetails.getAd() != null) {
+                    throw new IllegalArgumentException("Birim adı güncellenemez!");
+                }
+
                 if (birimDetails.getId() != null) {
                     Optional<Birim> optionalBirim = birimRepository.findById(birimDetails.getId());
                     if (optionalBirim.isPresent()) {
                         personel.setBirim(optionalBirim.get());
                     } else {
-                        throw new NotFoundException("Did not find birim " + birimDetails.getId());
+                        throw new NotFoundException("Birim bulunamadı: " + birimDetails.getId());
                     }
-                } else {
-                    Birim savedBirim = birimRepository.save(birimDetails);
-                    personel.setBirim(savedBirim);
                 }
             }
 
             return personelRepository.save(personel);
         } else {
-            throw new NotFoundException("Did not find personel " + theId);
+            throw new NotFoundException("Personel bulunamadı: " + theId);
         }
     }
 
     @Override
     public Personel save(Personel personel) {
         Birim birim = personel.getBirim();
-        if (birim != null && birim.getId() == null) {
-            birim = birimRepository.save(birim);
-            personel.setBirim(birim);
+        if (birim == null || birim.getId() == null) {
+            throw new IllegalArgumentException("Birim ID boş olamaz.");
+        } else {
+            Optional<Birim> existingBirim = birimRepository.findById(birim.getId());
+            if (existingBirim.isPresent()) {
+                personel.setBirim(existingBirim.get());
+            } else {
+                throw new NotFoundException("Birim bulunamadı: " + birim.getId());
+            }
         }
         return personelRepository.save(personel);
     }

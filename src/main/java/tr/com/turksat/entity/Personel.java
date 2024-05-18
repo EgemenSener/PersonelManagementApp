@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,7 +16,7 @@ public class Personel {
     private String soyad;
     private String tcKimlikNo;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
-    private Date dogumTarihi;
+    private LocalDate dogumTarihi;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
@@ -58,11 +59,11 @@ public class Personel {
         this.tcKimlikNo = tcKimlikNo;
     }
 
-    public Date getDogumTarihi() {
+    public LocalDate getDogumTarihi() {
         return dogumTarihi;
     }
 
-    public void setDogumTarihi(Date dogumTarihi) {
+    public void setDogumTarihi(LocalDate dogumTarihi) {
         this.dogumTarihi = dogumTarihi;
     }
 
