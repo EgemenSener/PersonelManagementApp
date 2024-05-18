@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
+import tr.com.turksat.config.PropertiesConfiguration;
 import tr.com.turksat.entity.Birim;
 import tr.com.turksat.entity.Personel;
 
@@ -21,20 +22,22 @@ import java.time.LocalDate;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class PersonelControllerTest {
+class TurksatMainApplicationTests {
 	private final MockMvc mockMvc;
 	private final ObjectMapper objectMapper;
+	private final PropertiesConfiguration propertiesConfiguration;
 
 	@Autowired
-	public PersonelControllerTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+	public TurksatMainApplicationTests(MockMvc mockMvc, ObjectMapper objectMapper, PropertiesConfiguration propertiesConfiguration) {
 		this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
+        this.propertiesConfiguration = propertiesConfiguration;
     }
 
 	@Test
 	public void testGetAllPersonel() throws Exception {
 		mockMvc.perform(get("/api/personel")
-						.with(httpBasic("turksat", "turksat-odev-uygulamasi")))
+						.with(httpBasic(propertiesConfiguration.getSpringUsername(), propertiesConfiguration.getSpringPassword())))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$").isArray())
@@ -44,7 +47,7 @@ class PersonelControllerTest {
 	@Test
 	public void testGetPersonelById() throws Exception {
 		mockMvc.perform(get("/api/personel/2")
-						.with(httpBasic("turksat", "turksat-odev-uygulamasi")))
+						.with(httpBasic(propertiesConfiguration.getSpringUsername(), propertiesConfiguration.getSpringPassword())))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$").isNotEmpty());
@@ -62,7 +65,7 @@ class PersonelControllerTest {
 		personel.setBirim(birim);
 
 		mockMvc.perform(post("/api/personel")
-						.with(SecurityMockMvcRequestPostProcessors.httpBasic("turksat", "turksat-odev-uygulamasi"))
+						.with(SecurityMockMvcRequestPostProcessors.httpBasic(propertiesConfiguration.getSpringUsername(), propertiesConfiguration.getSpringPassword()))
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(personel)))
 				.andExpect(status().isOk());
@@ -78,7 +81,7 @@ class PersonelControllerTest {
 		personel.setBirim(birim);
 
 		mockMvc.perform(put("/api/personel/2")
-						.with(SecurityMockMvcRequestPostProcessors.httpBasic("turksat", "turksat-odev-uygulamasi"))
+						.with(SecurityMockMvcRequestPostProcessors.httpBasic(propertiesConfiguration.getSpringUsername(), propertiesConfiguration.getSpringPassword()))
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(personel)))
 				.andExpect(status().isOk());
@@ -86,8 +89,8 @@ class PersonelControllerTest {
 
 	@Test
 	public void testDeletePersonelById() throws Exception {
-		mockMvc.perform(delete("/api/personel/14")
-						.with(httpBasic("turksat", "turksat-odev-uygulamasi")))
+		mockMvc.perform(delete("/api/personel/17")
+						.with(httpBasic(propertiesConfiguration.getSpringUsername(), propertiesConfiguration.getSpringPassword())))
 				.andExpect(status().isOk());
 	}
 }
