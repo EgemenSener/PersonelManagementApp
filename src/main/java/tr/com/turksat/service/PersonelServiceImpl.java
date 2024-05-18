@@ -59,7 +59,7 @@ public class PersonelServiceImpl implements PersonelService {
 
             if (birimDetails != null) {
                 if (birimDetails.getAd() != null) {
-                    throw new IllegalArgumentException("Birim adı güncellenemez!");
+                    throw new IllegalArgumentException("Birim adi guncellenemez!");
                 }
 
                 if (birimDetails.getId() != null) {
@@ -67,14 +67,14 @@ public class PersonelServiceImpl implements PersonelService {
                     if (optionalBirim.isPresent()) {
                         personel.setBirim(optionalBirim.get());
                     } else {
-                        throw new NotFoundException("Birim bulunamadı: " + birimDetails.getId());
+                        throw new NotFoundException("Birim bulunamadi: " + birimDetails.getId());
                     }
                 }
             }
 
             return personelRepository.save(personel);
         } else {
-            throw new NotFoundException("Personel bulunamadı: " + theId);
+            throw new NotFoundException("Personel bulunamadi: " + theId);
         }
     }
 
@@ -88,7 +88,7 @@ public class PersonelServiceImpl implements PersonelService {
             if (existingBirim.isPresent()) {
                 personel.setBirim(existingBirim.get());
             } else {
-                throw new NotFoundException("Birim bulunamadı: " + birim.getId());
+                throw new NotFoundException("Birim bulunamadi: " + birim.getId());
             }
         }
         return personelRepository.save(personel);
