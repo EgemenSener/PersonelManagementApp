@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class TurksatMainApplication {
 	public static void main(String[] args) {
 		System.setProperty("jdk.httpclient.HttpClient.log","all");
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(TurksatMainApplication.class, args);
 	}
 
 }

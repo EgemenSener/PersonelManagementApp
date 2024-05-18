@@ -7,7 +7,7 @@ import java.util.List;
 public interface PersonelService {
     List<Personel> findAll();
     Personel findById(int theId);
-    Personel updatePersonel(Integer personelId, Personel personelDetails);
+    Personel updatePersonel(Integer theId, Personel personelDetails);
     Personel save(Personel thePersonel);
     void deleteById(int theId);
 }

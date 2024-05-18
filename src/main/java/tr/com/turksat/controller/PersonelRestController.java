@@ -39,7 +39,7 @@ public class PersonelRestController {
         return personelService.updatePersonel(personelId, thePersonel);
     }
 
-    @DeleteMapping("/{personelId}") //parametre gondermek icin
+    @DeleteMapping("/{personelId}")
     public String deletePersonel(@PathVariable int personelId) {
         Personel tempPersonel = personelService.findById(personelId);
         if(tempPersonel == null) throw new NotFoundException("Personel doesn't exist " + personelId);
