@@ -1,11 +1,12 @@
-# Dockerfile
-FROM maven:3.8.1-openjdk-17 AS build
+# Stage 1: Build Stage
+FROM maven:3.8.1-openjdk-17-slim AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17-oracle
-COPY target/*.jar testapp.jar
-EXPOSE 8082
-ENTRYPOINT ["java","-jar","testapp.jar"]
+# Stage 2: Run Stage
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar your-app.jar
+ENTRYPOINT ["java","-jar","your-app.jar"]
